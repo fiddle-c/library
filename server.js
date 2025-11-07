@@ -1,23 +1,26 @@
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').config()
-// }
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 
 const express = require('express')
 const app = express();
 const port = 3000; 
 const expressLayouts = require('express-ejs-layouts')
-const indexRouter = require('./routes/index')
 
-const dbURI = 'mongodb://0.0.0.0:27017/test';
+const indexRouter = require('./routes/index')
+const authorRouter = require('./routes/authors')
+const bodyParser = require('body-parser')
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
+
 
 const mongoose = require('mongoose')
-mongoose.connect(dbURI)
+mongoose.connect(process.env.DATABASE_URL)
 .then(() => {
     console.log("Connected to mongodb")
     app.listen(port ,()=> {
@@ -36,6 +39,8 @@ db.once('open',() => console.log('Connected to mongoose'))
 
 
 app.use('/', indexRouter)
+app.use('/authors', authorRouter)
+
 app.listen(process.env.PORT || port, () => {
     console.log("server is running")
 })

@@ -5,7 +5,6 @@
     "express": "^5.1.0",
     "express-ejs-layouts": "^2.5.1",
     "mongoose": "^8.19.3",
-    "multer": "^2.0.2",
     "superheroes": "^4.0.0"
   },
   "name": "node",

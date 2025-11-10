@@ -36,7 +36,7 @@ try {
 } catch {
         res.render('authors/new', {
             author: author,
-            errorMessage: "error getting author"
+            errorMessage: "error creating author"
     })    
 }
 
